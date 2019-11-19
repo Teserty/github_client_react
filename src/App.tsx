@@ -1,16 +1,29 @@
 import React from 'react';
-
-import { Provider } from 'react-redux'
-import teststore from './store'
 import './App.css';
-
-const App: React.FC = () => {
+import UserPage from './components/user/loginedUser'
+import ListWithSearch from './components/ListWithSearch'
+import { connect } from 'react-redux'
+import {BrowserRouter, Route, Switch}  from 'react-router-dom'
+const App: React.FC = (props: any) => {
+  const {user, photos} = props;
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <UserPage/>
+        </Route>
+        <Route exact path="/search">
+          <ListWithSearch/>
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
-export default App;
+const mapStateToProps = (store: any) => {
+  return {
+    user: store.user,
+    photos: store.page
+  }
+}
+export default connect(mapStateToProps)(App)
